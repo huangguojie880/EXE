@@ -1,2 +1,2 @@
 # EXE
-pyinstaller -F App.py
+pyinstaller -i 1.ico -F App.py
