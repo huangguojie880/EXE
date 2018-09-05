@@ -6,11 +6,16 @@ import numpy as np
 from keras.layers import Conv2D,Activation,Add, Input,Layer
 from keras.models import Model
 import tensorflow as tf
+import sys
 
-lines = ''
-for line in fileinput.input('process.py'):
-    lines += line
-exec(lines)
+try:
+    lines = ''
+    for line in fileinput.input('process.py'):
+        lines += line
+    exec(lines)
+except Exception as e:
+    print(e)
+    sys.exit()
 
 class Img_Proc_Gui(QWidget):
     def __init__(self, parent=None):
@@ -25,6 +30,7 @@ class Img_Proc_Gui(QWidget):
         except Exception as e:
             print('模型加载失败！')
             print(e)
+            sys.exit()
 
         hbox_address1 = QHBoxLayout()
         self.address1 = QLineEdit()
@@ -64,27 +70,42 @@ class Img_Proc_Gui(QWidget):
 
     #@pyqtSlot()
     def quit_clicked(self):
-        cv2.destroyAllWindows()
-        self.close()
+        try:
+            cv2.destroyAllWindows()
+            self.close()
+        except Exception as e:
+            print(e)
 
     def open1(self):
-        fileName = QFileDialog.getOpenFileName(self,'openFile')
-        self.address1.setText(fileName[0])
-        self.img = cv2.imread(self.address1.text())
-        cv2.imshow('Original Image', self.img)
-        cv2.waitKey()
+        try:
+            fileName = QFileDialog.getOpenFileName(self,'openFile')
+            self.address1.setText(fileName[0])
+            self.img = cv2.imread(self.address1.text())
+            cv2.imshow('Original Image', self.img)
+            cv2.waitKey()
+        except Exception as e:
+            print(e)
 
     def open2(self):
-        fileName = QFileDialog.getExistingDirectory()
-        self.address2.setText(fileName)
+        try:
+            fileName = QFileDialog.getExistingDirectory()
+            self.address2.setText(fileName)
+        except Exception as e:
+            print(e)
 
     def save(self):
-        name = self.address1.text().split('/')[-1].split('.')[0]
-        my_save(self.address2.text(), name, self.process_result)
+        try:
+            name = self.address1.text().split('/')[-1].split('.')[0]
+            my_save(self.address2.text(), name, self.process_result)
+        except Exception as e:
+            print(e)
 
     def getInput(self):
-        self.process_result = my_imgProcess(self.img, self.mm)
-        my_show(self.process_result)
+        try:
+            self.process_result = my_imgProcess(self.img, self.mm)
+            my_show(self.process_result)
+        except Exception as e:
+            print(e)
 
 
 if __name__ == '__main__':
