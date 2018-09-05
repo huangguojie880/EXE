@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import *
+from PyQt5 import QtGui
 import fileinput
 import cv2
 import os
@@ -67,6 +68,9 @@ class Img_Proc_Gui(QWidget):
         self.setGeometry(400,300,400,200)
         self.setWindowTitle('AITool')
         self.setLayout(vbox)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap('1.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.setWindowIcon(icon)
 
     #@pyqtSlot()
     def quit_clicked(self):
@@ -118,4 +122,3 @@ if __name__ == '__main__':
         sys.exit(app.exec_())
     except:
         pass
-
